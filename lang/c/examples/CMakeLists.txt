@@ -18,7 +18,11 @@
 #
 
 add_executable(quickstop quickstop.c)
+add_executable(createdb createdb.c)
+add_executable(printdb printdb.c)
 target_link_libraries(quickstop avro-static)
+target_link_libraries(createdb avro-static)
+target_link_libraries(printdb avro-static)
 
 if (WIN32)
     set(exec_name ${CMAKE_CURRENT_BINARY_DIR}/Debug/quickstop.exe)

@@ -161,6 +161,14 @@ else (SNAPPY_FOUND AND ZLIB_FOUND)
     message("Disabled snappy codec. libsnappy not found or zlib not found.")
 endif (SNAPPY_FOUND AND ZLIB_FOUND)
 
+find_package(QATzip)
+if (QATZIP_FOUND)
+    set(QZ_PKG libqatzip)
+    add_definitions(-DQAT_CODEC)
+    include_directories(${QZ_INCLUDE_DIR})
+    message("Enabled QAT codec")
+endif (QATZIP_FOUND)
+
 find_package(PkgConfig)
 pkg_check_modules(LZMA liblzma)
 if (LZMA_FOUND)
@@ -175,8 +183,8 @@ else (LZMA_FOUND)
     message("Disabled lzma codec. liblzma not found.")
 endif (LZMA_FOUND)
 
-set(CODEC_LIBRARIES ${ZLIB_LIBRARIES} ${LZMA_LIBRARIES} ${SNAPPY_LIBRARIES})
-set(CODEC_PKG "@ZLIB_PKG@ @LZMA_PKG@ @SNAPPY_PKG@")
+set(CODEC_LIBRARIES ${ZLIB_LIBRARIES} ${LZMA_LIBRARIES} ${SNAPPY_LIBRARIES} ${QZ_LIBRARIES})
+set(CODEC_PKG "@ZLIB_PKG@ @LZMA_PKG@ @SNAPPY_PKG@ @QZ_PKG@")
 
 # Jansson JSON library
 pkg_check_modules(JANSSON jansson>=2.3)
